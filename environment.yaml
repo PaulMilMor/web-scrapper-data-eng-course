@@ -1,0 +1,4 @@
+name: web_scrapper
+channels:
+  - defaults
+prefix: /home/paulmilmor/anaconda3/envs/web_scrapper
