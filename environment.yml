@@ -1,4 +1,9 @@
 name: web_scrapper
 channels:
   - defaults
+dependencies:
+  - bs4
+  - requests
+  - yaml
+  - pyyaml
 prefix: /home/paulmilmor/anaconda3/envs/web_scrapper

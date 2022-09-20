@@ -1,5 +1,9 @@
 news_sites:
   eluniversal:
     url: http://www.eluniversal.com.mx
-  elpais:
-    url: http://elpais.com
+    queries:
+      homepage_article_links: '.field-content a'
+  eldeber:
+    url: https://www.eldeber.com.bo
+    queries:
+      homepage_article_links: '.nota-link'

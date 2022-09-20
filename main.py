@@ -2,6 +2,7 @@ import argparse
 import logging
 logging.basicConfig(level=logging.INFO)
 
+import news_page_object as news
 from common import config
 
 
@@ -11,6 +12,10 @@ def _news_scraper(news_site_uid):
     host = config()['news_sites'][news_site_uid]['url']
 
     logging.info('Beginning scrapper for {}'.format(host))
+    homepage = news.HomePage(news_site_uid, host)
+
+    for link in homepage.article_links:
+        print(link)
 
 
 if __name__ == '__main__':
