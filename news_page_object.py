@@ -1,4 +1,3 @@
-from email import header
 import bs4
 import requests
 
