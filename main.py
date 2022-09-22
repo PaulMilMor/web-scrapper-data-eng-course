@@ -13,6 +13,7 @@ import news_page_object as news
 from common import config
 
 
+# Defining the logger and the regular expressions that we will use later in the code.
 logger = logging.getLogger(__name__)
 is_well_formed_link = re.compile(r'^https?://.+/.+$')
 is_root_path = re.compile(r'^/.+$')
