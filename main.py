@@ -18,6 +18,24 @@ is_well_formed_link = re.compile(r'^https?://.+/.+$')
 is_root_path = re.compile(r'^/.+$')
 
 def _news_scraper(news_site_uid):
+    """
+    It takes a news site's unique identifier as an argument, and then it creates a HomePage object,
+    which is a class that we created in the news_page_object.py file. 
+    
+    The HomePage object has a method called article_links, which returns a list of URLs for the articles
+    on the homepage. 
+    
+    Then, for each of those links, we call the _fetch_article function, which returns an Article object.
+    
+    
+    If the article is not None, we append it to the articles list. 
+    
+    Finally, we call the _save_articles function, which saves the articles to a file. 
+    
+    Let's take a look at the _fetch_article function.
+    
+    :param news_site_uid: The unique identifier for the news site
+    """
     host = config()['news_sites'][news_site_uid]['url']
 
     logging.info('Beginning scrapper for {}'.format(host))
@@ -35,6 +53,12 @@ def _news_scraper(news_site_uid):
 
 
 def _save_articles(news_site_uid, articles):
+    """
+    It takes a list of articles and saves them to a CSV file
+    
+    :param news_site_uid: The unique identifier for the news site
+    :param articles: The list of articles that we want to save
+    """
     now = datetime.datetime.now().strftime('%Y_%m_%d')
     out_file_name = f'{news_site_uid}_{now}_articles.csv'
     csv_headers = list(filter(lambda property: not property.startswith('_'), dir(articles[0])))
@@ -48,6 +72,14 @@ def _save_articles(news_site_uid, articles):
 
 
 def _fetch_article(news_site_uid, host, link):
+    """
+    It receives a news site uid, a host and a link, and it returns an article object
+    
+    :param news_site_uid: The unique identifier of the news site
+    :param host: The host of the news site
+    :param link: The link to the article
+    :return: A list of articles
+    """
     logger.info(f'Start fetching article at {link}')
 
     article = None
@@ -64,12 +96,21 @@ def _fetch_article(news_site_uid, host, link):
 
 
 def _build_link(host, link):
+    """
+    It takes a news site as an argument, and then it scrapes the news site and returns a list of links
+    to articles
+    
+    :param host: The host of the news site that we want to scrape
+    :param link: The link to the article
+    :return: A list of dictionaries.
+    """
     if is_well_formed_link.match(link):
         return link
     elif is_root_path.match(link):
         return f'{host}{link}'
     return f'{host}/{link}'
 
+# A way to run the code only if the file is executed directly.
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
