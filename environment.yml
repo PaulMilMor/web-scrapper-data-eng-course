@@ -10,4 +10,5 @@ dependencies:
   - ipykernel
   - nltk
   - matplotlib
+  - sqlalchemy
 prefix: /home/paulmilmor/anaconda3/envs/web_scrapper
