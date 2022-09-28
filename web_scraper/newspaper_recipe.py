@@ -2,11 +2,14 @@ import argparse
 import hashlib
 import logging
 logging.basicConfig(level=logging.INFO)
+import nltk
+
 from urllib.parse import urlparse
+from nltk.corpus import stopwords
 
 import pandas as pd
 
-
+stop_words = set(stopwords.words('spanish'))
 logger = logging.getLogger(__name__)
 
 
@@ -20,6 +23,8 @@ def main(filename):
     df = _fill_missing_titles(df)
     df = _generate_uids_for_rows(df)
     df = _remove_new_lines_from_body(df)
+    df = _tokenize_title(df)
+    df = _tokenize_body(df)
 
     return df
 
@@ -90,6 +95,26 @@ def _remove_new_lines_from_body(df):
 
     return df
 
+
+def _tokenize_column(df, column_name):
+    return (df
+                .dropna()
+                .apply(lambda row: nltk.word_tokenize(row[column_name]), axis=1)
+                .apply(lambda tokens: list(filter(lambda token: token.isalpha(), tokens)))
+                .apply(lambda tokens: list(map(lambda token: token.lower(), tokens)))
+                .apply(lambda word_list: list(filter(lambda word: word not in stop_words, word_list)))
+                .apply(lambda valid_word_list: len(valid_word_list))
+            )
+
+
+def _tokenize_title(df):
+    df['n_tokens_title'] = _tokenize_column(df, 'title')
+    return df
+
+
+def _tokenize_body(df):
+    df['n_tokens_body'] = _tokenize_column(df, 'body')
+    return df
 
 
 if __name__ == '__main__':
