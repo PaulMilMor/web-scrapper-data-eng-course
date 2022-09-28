@@ -36,7 +36,7 @@ def main(filename):
 def _read_data(filename):
     logger.info('Reading file {}'.format(filename))
 
-    return pd.read_csv(filename)
+    return pd.read_csv(filename, encoding = 'utf-8-sig')
 
 
 def _extract_newspaper_uid(filename):
@@ -136,7 +136,7 @@ def _drop_rows_with_missing_values(df):
 def _save_data(df, filename):
     clean_filename = 'clean_{}'.format(filename)
     logger.info('Saving data at location: {}'.format(filename))
-    df.to_csv(clean_filename)
+    df.to_csv(clean_filename, encoding = 'utf-8-sig')
 
 
 if __name__ == '__main__':
