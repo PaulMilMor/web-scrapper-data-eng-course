@@ -6,4 +6,8 @@ dependencies:
   - requests
   - yaml
   - pyyaml
+  - pandas
+  - ipykernel
+  - nltk
+  - matplotlib
 prefix: /home/paulmilmor/anaconda3/envs/web_scrapper
